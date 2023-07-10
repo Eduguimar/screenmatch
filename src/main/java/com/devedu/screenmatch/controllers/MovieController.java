@@ -17,12 +17,17 @@ public class MovieController {
     @Autowired
     private MovieRepository movieRepository;
 
-    @GetMapping
+    @GetMapping("/form")
     public String openFormPage(){
         return "movies/form";
     }
 
-    @PostMapping
+    @GetMapping
+    public String openListPage(){
+        return "movies/list";
+    }
+
+    @PostMapping("/form")
     public String registerMovie(MovieDTO movieDTO) {
         var movie = new Movie();
         BeanUtils.copyProperties(movieDTO, movie);
