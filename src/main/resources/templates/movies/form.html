@@ -9,18 +9,23 @@
 <div layout:fragment="content">
     <h1>Movie Register</h1>
     <form method="post" action="/movies">
-        <label for="name">Name:</label>
-        <input id="name" name="name">
-        <hr>
-        <label for="duration">Duration (min):</label>
-        <input id="duration" name="duration">
-        <hr>
-        <label for="year">Year:</label>
-        <input id="year" name="year">
-        <hr>
-        <label for="genre">Genre:</label>
-        <input id="genre" name="genre">
-        <hr>
+        <div>
+            <label for="name">Name:</label>
+            <input id="name" name="name">
+        </div>
+        <div>
+            <label for="duration">Duration (min):</label>
+            <input id="duration" name="duration">
+        </div>
+        <div>
+            <label for="year">Year:</label>
+            <input id="year" name="year">
+        </div>
+        <div>
+            <label for="genre">Genre:</label>
+            <input id="genre" name="genre">
+        </div>
+        
         <input type="submit" value="Register">
     </form>
 </div>
