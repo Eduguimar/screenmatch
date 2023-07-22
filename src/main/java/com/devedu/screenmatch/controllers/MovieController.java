@@ -25,7 +25,7 @@ public class MovieController {
 
     @GetMapping
     public String openListPage(Model model){
-        model.addAttribute("movies", movieRepository.getAllMovies());
+        model.addAttribute("movies", movieRepository.findAll());
         return "movies/list";
     }
 
@@ -33,8 +33,7 @@ public class MovieController {
     public String registerMovie(MovieDTO movieDTO) {
         var movie = new Movie();
         BeanUtils.copyProperties(movieDTO, movie);
-        movieRepository.addMovie(movie);
-        System.out.println(movieRepository.getAllMovies());
+        movieRepository.save(movie);
         return "redirect:/movies";
     }
 }
