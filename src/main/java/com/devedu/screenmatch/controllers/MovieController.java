@@ -1,46 +1,51 @@
 package com.devedu.screenmatch.controllers;
 
-import com.devedu.screenmatch.domain.movie.Movie;
-import com.devedu.screenmatch.domain.movie.dto.MovieDTO;
-import com.devedu.screenmatch.repositories.MovieRepository;
-import org.springframework.beans.BeanUtils;
+import com.devedu.screenmatch.domain.movie.dto.RegisterMovieDTO;
+import com.devedu.screenmatch.domain.movie.dto.UpdateMovieDTO;
+import com.devedu.screenmatch.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/movies")
 public class MovieController {
 
     @Autowired
-    private MovieRepository movieRepository;
+    private MovieService service;
 
     @GetMapping("/form")
-    public String openFormPage(){
+    public String openFormPage(Long id, Model model){
+        if (id != null) {
+            var movie = service.getById(id);
+            model.addAttribute("movie", movie);
+        }
         return "movies/form";
     }
 
     @GetMapping
     public String openListPage(Model model){
-        model.addAttribute("movies", movieRepository.findAll());
+        model.addAttribute("movies", service.findAll());
         return "movies/list";
     }
 
     @PostMapping
-    public String registerMovie(MovieDTO movieDTO) {
-        var movie = new Movie();
-        BeanUtils.copyProperties(movieDTO, movie);
-        movieRepository.save(movie);
+    public String registerMovie(RegisterMovieDTO movieDTO) {
+        service.save(movieDTO);
+        return "redirect:/movies";
+    }
+
+    @PutMapping
+    public String updateMovie(UpdateMovieDTO movieDTO) {
+        var movie = service.getById(movieDTO.id());
+        service.updateMovie(movie);
         return "redirect:/movies";
     }
 
     @DeleteMapping
     public String deleteMovie(Long id) {
-        movieRepository.deleteById(id);
+        service.delete(id);
         return "redirect:/movies";
     }
 }

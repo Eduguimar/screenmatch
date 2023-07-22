@@ -8,7 +8,7 @@
 <body>
 <div layout:fragment="content">
     <h1>Movie List</h1>
-    <a href="/movies/form">Novo</a>
+    <a href="/movies/form">New Movie</a>
     <table>
         <thead>
         <tr>
@@ -26,6 +26,7 @@
             <td th:text="${movie.year}"></td>
             <td th:text="${movie.genre}"></td>
             <td>
+                <a th:href="@{/movies/form?id={id}(id=${movie.id})}">Update</a>
                 <form method="post" action="/movies">
                     <input type="hidden" name="_method" value="delete">
                     <input type="hidden" name="id" th:value="${movie.id}">
